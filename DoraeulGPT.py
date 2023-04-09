@@ -1041,34 +1041,10 @@ g(x)\,=\,e^{{ix}}=\cos x+i\sin x이다.'''
             root.mainloop()
         elif '콜라츠' in chat:
             time.sleep(0.8)
-            print("콜라츠 상수: 정리 수열의 행을 N, 콜라츠 상수를 C라고 표기한다. C는 수열이 이동한 행의 총합이며 이 값은 –(N-1)의 값과 같다. C=이동한 행의 합=-(N-1), " 
+            print("콜라츠 상수: 정리 수열의 행을 N, 콜라ㅁ츠 상수를 C라고 표기한다. C는 수열이 이동한 행의 총합이며 이 값은 –(N-1)의 값과 같다. C=이동한 행의 합=-(N-1), " 
                    "C=-(N-1)이 된다. 12n+1 ~ 12n+12의 범위에서. 시작한 행의 값과 콜라츠 상수의 합은 도착한 행의 값이 된다. 시작한 행으로부터 도착한 행을 구하는 식은. " 
                    "N+C=도착한 행의 값=N-(N-1)=N-N+1=1. 12n+1 ~ 12n+12의 범위에서 각 N과 C의 합은 항상 1이 되므로, 모든 행은 1행에 수렴한다는 것이 증명된다, " 
                    "1행의 수는 1에 수렴하므로 모든 수는 1에 수렴한다는 것이 증명된다 ")
-        elif '시' in chat and '써줘' in chat:
-            f = open('qwwerty.txt', 'r', encoding = 'UTF-8')
-            import random
-            qwer = random.randint(1, 6441)
-            cnt = 0
-            qw = 0
-            kl = 0
-            for q in range(10000):
-                for i in f:
-                    cnt += 1
-                    qwerty = random.randint ( 1945 , 1967 )
-                    if cnt >= qwer - 1:
-                        for j in range(qwerty, qwerty + 1):
-                            if qw >= 2:
-                                kl += 1
-                                print(i)
-                    if str(qwerty) in i:
-                        qw += 1
-                        if kl > 0:
-                            return '-------------'
-
-        elif  '소설' in chat or '이야기' in chat:
-            import novel
-            print(novel.novel())
         elif '타이' in chat:
             times = int(input("얼만큼? "))
             print(times)
@@ -1478,7 +1454,7 @@ g(x)\,=\,e^{{ix}}=\cos x+i\sin x이다.'''
         elif '끝' in chat:
             return None
         else:
-            qwertyui = open( '../venv/data.txt' , 'r' , encoding = 'UTF-8' )
+            qwertyui = open( 'data.txt' , 'r' , encoding = 'UTF-8' )
             cnt = 0
             for i in qwertyui:
                 for j in range(len(chat) - 3):
