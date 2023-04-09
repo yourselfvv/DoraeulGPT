@@ -6,8 +6,8 @@ import wikipedia
 
 
 class ChatBot:
-    def __init__(self):pass
-
+    def __init__(self):
+        pass
 
     def dip( self , sentence):
         sentence = self.NLP(chats = sentence)
@@ -457,15 +457,14 @@ class ChatBot:
         elif '기분' in memory:
             import random as r
             from _datetime import datetime
-            kinds = ['보통입', '좋음', '기쁨', '잘 모르겠음', '그냥 그럼']
+            kinds = ['보통입', '좋습', '기쁨', '잘 모르겠습', '그냥 그렇습']
             qwe = r.randint(0, 4)
             f = open('qwasedr', 'r', encoding = 'UTF-8')
             f_list = []
             for line in f:
                 f_list.append(line)
             f.close()
-            print(str(f_list))
-            if ('보통입' in f_list or '좋음' in f_list or '기쁨' in f_list or '잘 모르겠음' in f_list or '그냥 그럼') and f"{datetime.now().strftime('%Y.%m.%d')}\n" in f_list:
+            if ('보통입' in f_list or '좋습' in f_list or '기쁨' in f_list or '잘 모르겠습' in f_list or '그냥 그렇습') and f"{datetime.now().strftime('%Y.%m.%d')}\n" in f_list:
                 pass
             else:
                 f = open('qwasedr', 'w', encoding = 'UTF-8')
@@ -474,6 +473,8 @@ class ChatBot:
 """)
                 f.write(kinds[qwe])
                 f_list = []
+                f.close()
+                f = open('qwasedr', 'r', encoding = 'UTF-8')
                 for line in f:
                     f_list.append(line)
                 f.close()
@@ -1499,7 +1500,6 @@ g(x)\,=\,e^{{ix}}=\cos x+i\sin x이다.'''
         webbrowser.open(url='https://www.google.com')
 
     def Run(self):
-
         f1 = open( 'stdout.txt', 'r', encoding = 'UTF-8')
         lists = []
         for line in f1:
