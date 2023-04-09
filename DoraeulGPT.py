@@ -454,6 +454,30 @@ class ChatBot:
             return self.worddd()
         elif '프로그램' in chat or '코드' in chat or '코딩' in chat:
             return self.coding(memory=chat)
+        elif '기분' in memory:
+            import random as r
+            from _datetime import datetime
+            kinds = ['보통입', '좋음', '기쁨', '잘 모르겠음', '그냥 그럼']
+            qwe = r.randint(0, 4)
+            f = open('qwasedr', 'r', encoding = 'UTF-8')
+            f_list = []
+            for line in f:
+                f_list.append(line)
+            f.close()
+            print(str(f_list))
+            if ('보통입' in f_list or '좋음' in f_list or '기쁨' in f_list or '잘 모르겠음' in f_list or '그냥 그럼') and f"{datetime.now().strftime('%Y.%m.%d')}\n" in f_list:
+                pass
+            else:
+                f = open('qwasedr', 'w', encoding = 'UTF-8')
+                f.write(datetime.now().strftime('%Y.%m.%d'))
+                f.write("""
+""")
+                f.write(kinds[qwe])
+                f_list = []
+                for line in f:
+                    f_list.append(line)
+                f.close()
+            return f"오늘은 {f_list[1]}니다."
         elif '불러' in chat:
             return ''
         elif '대해' in chat or '누구야' in chat or '뭐야' in chat:
