@@ -1,5 +1,5 @@
 import time
-import googletrans as gt
+from mtranslate import translate
 import webbrowser
 from fractions import Fraction
 import wikipedia
@@ -9,10 +9,9 @@ class ChatBot:
     def __init__(self):
         pass
 
-    def dip( self , sentence):
+    def dip(self , sentence):
         sentence = self.NLP(chats = sentence)
         wordslist = open('qwetyuio.txt', 'r', encoding = 'UTF-8')
-        cnt = 0
         for word in range(len(sentence)):
             for line in wordslist:
                 cnt = 0
@@ -27,7 +26,6 @@ class ChatBot:
                                 break
                     if cnt >= len (sentence[word]):
                         break
-        print(sentence)
         return " ".join(sentence)
 
     def NLP( self , chats ):
@@ -57,17 +55,17 @@ class ChatBot:
             print("""def calculator(expression):
     """, end = '')
             time.sleep(0.75)
-            print("return eval(expression)")
+            return "return eval(expression)"
         elif '구구단' in memory:
             print("for i in range(2, 10):")
             print("    for j in range(1, 10):")
-            print('        print(f"{i} * {j} = {i * j})')
+            return '        print(f"{i} * {j} = {i * j})'
         elif '삼각' in memory:
             if '역' in memory:
-                print("""for i in range(10,0,-1):
+                return """for i in range(10,0,-1):
     for j in range(i):
         print("* ",end="")
-    print()""")
+    print()"""
         else:
             return '이해하지 못했습니다.'
 
@@ -432,7 +430,6 @@ class ChatBot:
     def chat_bot(self, chat):
         import webbrowser
         import playsound as py
-        tr = gt.Translator()
         cnt = 0
         xnt = 0
         memory = str(chat)
@@ -442,10 +439,8 @@ class ChatBot:
             if eng in chat:
                 xnt += 1
         if xnt > 2:
-            chat = tr.translate(chat, dest='ko')
-            chat = chat.text
-        else:
-            chat = self.dip(sentence=chat)
+            chat = translate(memory, to_language = 'ko')
+        chat = self.dip(sentence=chat)
         for j in chat:
             for l in range(10):
                 if j == str(l):
@@ -481,92 +476,32 @@ class ChatBot:
             return f"오늘은 {f_list[1]}니다."
         elif '불러' in chat:
             return ''
-        elif '대해' in chat or '누구야' in chat or '뭐야' in chat:
-            if '누구야' in chat:
-                qiry = chat[:chat.find('누구야') - 2]
-                def who_is ( query ) :
-                    try :
-                        return wikipedia.summary ( query )
-                    except Exception :
-                        for new_query in wikipedia.search ( query ) :
-                            try :
-                                return wikipedia.summary ( new_query )
-                            except Exception :
-                                pass
-                    return "이해하지 못했습니다."
-
-                return tr.translate(who_is(query = tr.translate(qiry, dest = 'en', src = 'auto').text), dest = 'ko', src = 'auto').text
-            if '대해' in chat:
-                qiry = chat[:chat.find('대해') - 2]
-
-                def who_is ( query ) :
-                    try :
-                        return wikipedia.summary ( query )
-                    except Exception :
-                        for new_query in wikipedia.search ( query ) :
-                            try :
-                                return wikipedia.summary ( new_query )
-                            except Exception :
-                                pass
-                    return "이해하지 못했습니다."
-
-                return tr.translate(who_is ( query = tr.translate ( qiry , dest = 'en' , src = 'auto' ).text ), dest = 'ko', src = 'auto').text
-            qiry = chat [ :chat.find ( '뭐야' ) - 1 ]
-            def who_is ( query ) :
-                try :
-                    return wikipedia.summary ( query )
-                except Exception :
-                    for new_query in wikipedia.search ( query ) :
-                        try :
-                            return wikipedia.summary ( new_query )
-                        except Exception :
-                            pass
-                return "이해하지 못했습니다."
-
-            return tr.translate(who_is ( query = tr.translate ( qiry , dest = 'en' , src = 'auto' ).text ), dest = 'ko', src = 'auto').text
-        elif '가우스' in chat:
-            if '소수' in chat:
-                if '증명' in chat:
-                    return """해석적 증명의 개략:
-수론적 함수인 소수 계량 함수의 점근적 성장은 리만 제타 함수를 통해 복소해석학적인 명제로 치환할 수 있다. 우선, 다음과 같은 동치 관계는 초등적으로 보일 수 있다.
-\pi(x)\sim x\Leftrightarrow\psi(x)\sim x\Leftrightarrowfrac1{x^2}\int_1^x\psi(x')\,dx'=frac1{x^2}\sum_{n\le x}(x-n)\Lambda(n)\simfrac12
-여기서
-\psi(x)=\sum_{n\le x}\Lambda(n)
-는 제2종 체비쇼프 함수이며,
-\Lambda(n)는 폰 망골트 함수이다. 반면, 리만 제타 함수의 로그 도함수는 다음과 같이 쓸 수 있다.
-frac{\zeta'(z)}{\zeta(z)} = - \sum_{n =1}^{\infty}frac{\Lambda(n)}{n^z}
-두 합을 서로 연관짓기 위해, 다음과 같은 복소해석학적 보조정리를 사용한다.
-frac1{2\pi i}\int_{c-\infty i}^{c+\infty i}frac{(x/n)^zdz}{z(z+1)}=begin{cases}1-n/x&n\le x0&n>x\end{cases}\qquad(c>1)
-따라서, 제타 함수와 체비쇼프 함수를 다음과 같이 연관지을 수 있다.
-frac1{x^2}\int_1^x\psi(x')\,dx' = -frac{1}{2\pi i} \int_{c - \infty i}^{c + \infty i} frac{x^{z-1}}{z(z+1)}frac{\zeta'(z)}{\zeta(z)}\,dz\qquad(c>1)
-이제, 우변이 
-∞x/to\infty 극한에서 1/2로 수렴함을 경로적분법으로 증명할 수 있다.[2]"""
-        elif '오일러' in chat:
-            if '식' in chat:
-                return '''e^(pi*i)+1=0
-[증명] 함수 g(x)를 다음과 같이 정의한다.
-g(x)=e^{{ix}}
-허수단위 
-i는 상수이므로 
-g(x)의 도함수와 이계도함수는 다음과 같다.
-{begin{aligned}g'(x)&=ie^{{ix}}g''(x)&=i^{2}e^{{ix}}=-e^{{ix}}\end{aligned}}
-이로부터
-g''(x)=-g(x)\  또는
-g''(x)+g(x)=0\  라는 2차 선형 미분방정식이 만들어지고,
-일차 독립인 두 해가 발생한다.
-{begin{aligned}g_{1}(x)&=\cos xg_{2}(x)&=\sin x\end{aligned}}
-한편, 차수가 같은 미분방정식의 어떤 선형 결합도 해가 될 수 있으므로 위의 미분방정식의 일반적인 해는 다음과 같다.
-{begin{aligned}g(x)&=Ag_{1}(x)+Bg_{2}(x)&=A\cos x+B\sin xg'(x)&=-A\sin x+B\cos x\end{aligned}}
-A와 
-B는 상수)
-그리고 여기에 함수 
-g(x) 의 초기 조건
-{begin{aligned}g(0)&=e^{{i0}}&=1g'(0)&=ie^{{i0}}&=i\end{aligned}} 을 대입하면,
-{begin{aligned}g(0)&={\color {White}-}A\cos 0+B\sin 0&=Ag'(0)&=-A\sin 0+B\cos 0&=B\end{aligned}}
-곧,
-{begin{aligned}g(0)&=A&=1g'(0)&=B&=i\end{aligned}}
-이므로
-g(x)\,=\,e^{{ix}}=\cos x+i\sin x이다.'''
+        elif '+' in memory or '*' in memory or '/' in memory or '-' in memory or '^' in memory or 'e' in memory:
+            try:
+                eval(memory)
+            except:
+                expression_memory = []
+                for i in range(len(memory)):
+                    expression_memory.append(memory[i])
+                    if memory[i] == 'e':
+                        expression_memory[i] = '2.71828182845'
+                    elif (memory[i] == 'p' and memory[i + 1] == 'i') or memory[i] == 'π':
+                        expression_memory[i] = '3.14159265358'
+                    elif memory[i] == 's' and memory[i + 1] == 'q' and memory[i + 2] == 'r' and memory[i + 3] == 't':
+                        expression_memory[i] = str(float(memory[i + 5:memory[i + 5:].find(')')]) ** 0.5)
+                    elif memory[i] == '^':
+                        expression_memory[i] = '**'
+                    elif memory[i].isalpha():
+                        expression_memory[i] = '*1'
+                memory = "".join(expression_memory)
+                try:
+                    eval(memory)
+                except:
+                    print('',end = '')
+                else:
+                    return eval(memory)
+            else:
+                return eval(memory)
         elif '삼각' in memory and '넓' in memory:
             if memory.find('높이') != -1:
                 if memory.find('높이') < memory.find('변'):
@@ -899,6 +834,48 @@ g(x)\,=\,e^{{ix}}=\cos x+i\sin x이다.'''
             result = str(np.linalg.solve(xy, [int(expression[expression.find('=') + 1:len(expression)]), num_2]))
             result_list = ['x = ', result[1:result.find(' ')], '  y = ', result[result.find(' ') + 1:len(result) - 1]]
             return "".join(result_list)
+        elif '대해' in chat or '누구야' in chat or '뭐야' in chat:
+            if '누구야' in chat:
+                qiry = chat[:chat.find('누구야') - 2]
+                def who_is ( query ) :
+                    try :
+                        return wikipedia.summary ( query )
+                    except Exception :
+                        for new_query in wikipedia.search ( query ) :
+                            try :
+                                return wikipedia.summary ( new_query )
+                            except Exception :
+                                pass
+                    return "그러게요..."
+
+                return translate(who_is(query = translate(qiry, to_language = 'en')), to_language='ko')
+            if '대해' in chat:
+                qiry = chat[:chat.find('대해') - 2]
+
+                def who_is ( query ) :
+                    try :
+                        return wikipedia.summary ( query )
+                    except Exception :
+                        for new_query in wikipedia.search ( query ) :
+                            try :
+                                return wikipedia.summary ( new_query )
+                            except Exception :
+                                pass
+                    return "저는 모르겠습니다."
+
+                return translate(who_is(query = translate(qiry, to_language = 'en')), to_language='ko')
+            qiry = chat [ :chat.find ( '뭐야' ) - 1 ]
+            def who_is ( query ) :
+                try :
+                    return wikipedia.summary ( query )
+                except Exception :
+                    for new_query in wikipedia.search ( query ) :
+                        try :
+                            return wikipedia.summary ( new_query )
+                        except Exception :
+                            pass
+                return "그러게요..."
+            return translate(who_is(query = translate(qiry, to_language = 'en')), to_language='ko')
         elif '이름' in chat:
             return '저는 천재 입니다'
         elif '살' in chat:
@@ -919,13 +896,13 @@ g(x)\,=\,e^{{ix}}=\cos x+i\sin x이다.'''
                 if h in str1:
                     cnt += 1
             if cnt > 18:
-                result = tr.translate(str1, dest='ko')
+                result = translate(str1, to_language = 'ko')
                 return str1, f" => {result.text}"
             elif len(str1) - cnt < 5:
-                result = tr.translate ( str1 , dest = 'ko' )
+                result = translate ( str1 , to_language = 'ko')
                 return str1 , f" => {result.text}"
             else:
-                result = tr.translate(str1, dest='en', src='auto')
+                result = translate(str1, to_language = 'en')
                 return str1, f" => {result.text}"
         elif '고백' in chat:
             time.sleep(2)
@@ -1064,12 +1041,6 @@ g(x)\,=\,e^{{ix}}=\cos x+i\sin x이다.'''
             btn_res.grid(column=3, row=4, padx=5, pady=5)
 
             root.mainloop()
-        elif '콜라츠' in chat:
-            time.sleep(0.8)
-            print("콜라츠 상수: 정리 수열의 행을 N, 콜라ㅁ츠 상수를 C라고 표기한다. C는 수열이 이동한 행의 총합이며 이 값은 –(N-1)의 값과 같다. C=이동한 행의 합=-(N-1), " 
-                   "C=-(N-1)이 된다. 12n+1 ~ 12n+12의 범위에서. 시작한 행의 값과 콜라츠 상수의 합은 도착한 행의 값이 된다. 시작한 행으로부터 도착한 행을 구하는 식은. " 
-                   "N+C=도착한 행의 값=N-(N-1)=N-N+1=1. 12n+1 ~ 12n+12의 범위에서 각 N과 C의 합은 항상 1이 되므로, 모든 행은 1행에 수렴한다는 것이 증명된다, " 
-                   "1행의 수는 1에 수렴하므로 모든 수는 1에 수렴한다는 것이 증명된다 ")
         elif '타이' in chat:
             times = int(input("얼만큼? "))
             print(times)
@@ -1155,7 +1126,7 @@ g(x)\,=\,e^{{ix}}=\cos x+i\sin x이다.'''
                     xnt += 1
             if xnt > 2:
                 memory = input("problem >>> ")
-                memory = tr.translate(memory, dest='ko', src='auto').text
+                memory = translate(memory, to_language = 'ko')
             else:
                 memory = input("문제 내용 >>> ")
             expression = []
@@ -1476,7 +1447,7 @@ g(x)\,=\,e^{{ix}}=\cos x+i\sin x이다.'''
                         if cnt == 10:
                             break
                 return ", ".join(cam)
-        elif '끝' in chat:
+        elif '끝' in chat or 'Rmx' in memory:
             return None
         else:
             qwertyui = open( 'data.txt' , 'r' , encoding = 'UTF-8' )
@@ -1521,13 +1492,12 @@ g(x)\,=\,e^{{ix}}=\cos x+i\sin x이다.'''
                     ff.write(line)
             xnt = 0
             en = 'qwertyuiopasdfghjklzxcvbnm'
-            tr = gt.Translator()
             result = self.chat_bot(chat=self.chatting)
             for eng in en:
                 if eng in self.chatting:
                     xnt += 1
             if xnt > 5:
-                print(tr.translate(result, dest = 'en', src = 'auto').text)
+                print(translate(result, to_language = 'en').text)
             else:
                 print (result)
             if '그만' in self.chatting or '끝' in self.chatting and not '말잇' in self.chatting or '잘가' in self.chatting:
@@ -1536,27 +1506,14 @@ g(x)\,=\,e^{{ix}}=\cos x+i\sin x이다.'''
             f.write(">>> " + self.chatting)
             f.write("""
  """)
-            if '콜라츠' in self.chatting:
-                f.write("""콜라츠 상수: 정리 수열의 행을 N, 콜라츠 상수를 C라고 표기한다.
-C는 수열이 이동한 행의 총합이며 이 값은 –(N-1)의 값과 같다. C=이동한 행의 합=-(N-1),C=-(N-1)이 된다. 12n+1 ~ 12n+12의 범위에서.
-시작한 행의 값과 콜라츠 상수의 합은 도착한 행의 값이 된다. 시작한 행으로부터 도착한 행을 구하는 식은 N+C=도착한 행의 값=N-(N-1)=N-N+1=1. 12n+1 ~ 12n+12의 범위에서 각 N과 C의 합은 항상 1이 되므로, 
-모든 행은 1행에 수렴한다는 것이 증명된다, 1행의 수는 1에 수렴하므로 모든 수는 1에 수렴한다는 것이 증명된다""")
-            else:
-                f.write(str(result))
-                f.write("""
+            f.write(str(result))
+            f.write("""
 """)
             ff.write(">>> " + self.chatting)
             ff.write("""
  """)
-            if '콜라츠' in self.chatting:
-                ff.write ("""콜라츠 상수: 정리 수열의 행을 N, 콜라츠 상수를 C라고 표기한다.
-C는 수열이 이동한 행의 총합이며 이 값은 –(N-1)의 값과 같다. C=이동한 행의 합=-(N-1),C=-(N-1)이 된다. 12n+1 ~ 12n+12의 범위에서.
-시작한 행의 값과 콜라츠 상수의 합은 도착한 행의 값이 된다. 시작한 행으로부터 도착한 행을 구하는 식은 N+C=도착한 행의 값=N-(N-1)=N-N+1=1. 12n+1 ~ 12n+12의 
-범위에서 각 N과 C의 합은 항상 1이 되므로, 
-모든 행은 1행에 수렴한다는 것이 증명된다, 1행의 수는 1에 수렴하므로 모든 수는 1에 수렴한다는 것이 증명된다""")
-            else:
-                ff.write(str(result))
-                ff.write("""
+            ff.write(str(result))
+            ff.write("""
 """)
         f.close()
         ff.close()
