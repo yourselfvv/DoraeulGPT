@@ -1,0 +1,21 @@
+M, N, K = map(int, input().split())
+road_x = input().split()
+road_y = input().split()
+police_list = []
+for _ in range(K):
+    police_list.append(input().split())
+for i in range(len(road_x)):
+    road_x[i] = int(road_x[i])
+for i in range(len(road_y)):
+    road_y[i] = int(road_y[i])
+for i in range(len(police_list)):
+    police_list[i] = [int(police_list[i][0]), int(police_list[i][1])]
+result = [0] * len(police_list)
+print(police_list)
+for locate in range(len(police_list)):
+    for j in range(len(police_list) - locate):
+        for i in road_x:
+            for l in road_y:
+                result[locate] += abs(i - police_list[j][0]) + abs(i - police_list[locate][0]) + abs(l - police_list[j][1]) + abs(l - police_list[locate][1])
+
+print(int(min(result) / 2) if min(result) * len(result) == max(result) else min(result))
