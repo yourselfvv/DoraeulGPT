@@ -41,8 +41,10 @@ def chat_bot(chat):
         return result_2[result_1.index(min(result_1))]
 
 
+from mtranslate import translate
 while True:
     chats = input(">>>")
     if chats == 'quit':
         break
+    chats = translate(translate(chats, to_language = ‘en’), to_language=‘ko’)
     print(chat_bot(chats))
